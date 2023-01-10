@@ -1,6 +1,6 @@
 {
-  "name": "egui Template PWA",
-  "short_name": "egui-template-pwa",
+  "name": "Sports Time Puller PWA",
+  "short_name": "sports-time-puller-pwa",
   "icons": [
     {
       "src": "./icon-256.png",
