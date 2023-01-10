@@ -49,6 +49,7 @@ impl MlbPane {
     fn load_results(&self, ctx: Context) {
         let request = ehttp::Request::get(format!("https://statsapi.mlb.com/api/v1/schedule?language=en&sportId=1&date={}&hydrate=game,broadcasts", self.date));
         let results = self.results.clone();
+        results.write().unwrap().clear();
         let selected_team = self.selected_team.clone();
         let time_zone = self.time_zone;
         let selected_date = self.date;
