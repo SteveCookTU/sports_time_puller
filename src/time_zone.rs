@@ -1,6 +1,9 @@
-#[derive(Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
+use num_enum::{FromPrimitive, IntoPrimitive};
+
+#[derive(Copy, Clone, Ord, PartialOrd, Eq, PartialEq, FromPrimitive, IntoPrimitive)]
 #[repr(i8)]
 pub enum TimeZone {
+    #[num_enum(default)]
     Est = -4,
     Cst = -5,
     Mst = -6,

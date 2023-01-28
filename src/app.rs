@@ -1,33 +1,39 @@
-use crate::mlb::mlb_pane::MlbPane;
-use crate::Pane;
-use eframe::egui::Context;
-use eframe::{egui, App, Frame};
+use crate::components::mlb::*;
+use leptos::*;
+use leptos_router::*;
 
-pub struct SportsTimePuller {
-    active_pane: Box<dyn Pane>,
-}
-
-impl Default for SportsTimePuller {
-    fn default() -> Self {
-        Self {
-            active_pane: Box::new(MlbPane::new()),
-        }
-    }
-}
-
-impl SportsTimePuller {}
-
-impl App for SportsTimePuller {
-    fn update(&mut self, ctx: &Context, _frame: &mut Frame) {
-        egui::SidePanel::left("side_panel")
-            .min_width(250.0)
-            .resizable(true)
-            .show(ctx, |ui| {
-                self.active_pane.side_panel(ui);
-            });
-
-        egui::CentralPanel::default().show(ctx, |ui| {
-            self.active_pane.central_panel(ui);
-        });
+#[component]
+pub fn App(cx: Scope) -> impl IntoView {
+    view! {
+        cx,
+        <Router>
+            <Routes>
+                <Route path="" view=  move |cx| view! {
+                    cx,
+                    <main class="my-0 mx-auto max-w-3xl text-center">
+                        <h2 class="p-6 text-4xl">"Welcome to the Sports Time Puller"</h2>
+                        <p class="px-10 pb-10 text-center">"Click an option on the navigation bar above to get started."</p>
+                    </main>
+                }/>
+                <Route path="mlb" view=  move |cx| view! {
+                    cx,
+                    <main>
+                        <Mlb />
+                    </main>
+                }/>
+                <Route path="nba" view=  move |cx| view! {
+                    cx,
+                    <main class="my-0 mx-auto max-w-3xl text-center">
+                        <h2 class="p-6 text-4xl">"NBA"</h2>
+                    </main>
+                }/>
+                <Route path="nhl" view=  move |cx| view! {
+                    cx,
+                    <main class="my-0 mx-auto max-w-3xl text-center">
+                        <h2 class="p-6 text-4xl">"NHL"</h2>
+                    </main>
+                }/>
+            </Routes>
+        </Router>
     }
 }

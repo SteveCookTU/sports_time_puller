@@ -1,2 +1,2 @@
-[build]
-filehash = false
+[watch]
+watch = ["./src", "./style/output.css"]
