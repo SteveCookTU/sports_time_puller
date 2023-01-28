@@ -6,7 +6,7 @@ use leptos_router::*;
 pub fn App(cx: Scope) -> impl IntoView {
     view! {
         cx,
-        <Router>
+        <Router base="sports_time_puller">
             <Routes>
                 <Route path="" view=  move |cx| view! {
                     cx,
