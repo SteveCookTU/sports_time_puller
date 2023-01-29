@@ -182,17 +182,17 @@ pub fn nhl(cx: Scope) -> impl IntoView {
     view! {
         cx,
         <div class="flex flex-col">
-            <div class="flex h-12 justify-around items-center">
+            <div class="flex h-12 justify-around items-center m-4 bg-gray-300 rounded-lg shadow-sm shadow-gray-400">
                 <Teams value={team.get()} on_change=move |ev| {
                         set_team(event_target_value(&ev).parse::<u8>().unwrap_or_default());
                     }
                     get_teams=|| {get_teams()}
                 />
                 <TimeZone value={time_zone.get()} set_time_zone={set_time_zone}/>
-                <input class="bg-transparent" type="date" value={date} on:input=move |ev| {
+                <input class="bg-transparent border border-gray-600 rounded-md text-right" type="date" value={date} on:input=move |ev| {
                     set_date(event_target_value(&ev));
                 }/>
-                <button on:click=move |_| retrieve_results.dispatch(RequestParams {
+                <button class="bg-transparent border border-gray-600 rounded-md transition-colors hover:bg-gray-200 px-2 py-1" on:click=move |_| retrieve_results.dispatch(RequestParams {
                         team: team.get(), date: date.get(), time_zone: time_zone.get()
                     })>"Submit"</button>
             </div>

@@ -22,7 +22,7 @@ where
 
     view! {
         cx,
-        <select class="bg-transparent text-right" on:change=on_change value={value}>
+        <select class="bg-transparent text-right border border-gray-600 rounded-md" on:change=on_change value={value}>
             {
                 move || {
                     teams.with(|teams: &OutputT| {
