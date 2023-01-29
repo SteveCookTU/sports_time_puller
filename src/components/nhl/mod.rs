@@ -35,7 +35,7 @@ async fn load_results(params: RequestParams) -> Vec<GameResult> {
     let id = params.team;
     let mut results = vec![];
     if let Ok(response) = reqwest::get(format!(
-        "https://statsapi.web.nhl.com/api/v1/schedule?language=en&date={}&expand=broadcasts",
+        "https://statsapi.web.nhl.com/api/v1/schedule?language=en&date={}&hydrate=broadcasts",
         params.date
     ))
     .await
@@ -65,7 +65,8 @@ async fn load_results(params: RequestParams) -> Vec<GameResult> {
                     });
                     continue;
                 }
-                get_live_game_data(&mut results, schedule_game, time_zone.into(), selected_date).await;
+                get_live_game_data(&mut results, schedule_game, time_zone.into(), selected_date)
+                    .await;
             }
         }
     }
