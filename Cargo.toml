@@ -10,12 +10,12 @@ crate-type = ["cdylib", "rlib"]
 
 
 [dependencies]
-leptos = { version = "0.1.1", default-features = false, features = [
+leptos = { version = "0.1.3", default-features = false, features = [
   "serde",
   "csr"
 ] }
-leptos_meta = { version = "0.1.1", default-features = false, features = ['csr'] }
-leptos_router = { version = "0.1.1", default-features = false, features = ['csr'] }
+leptos_meta = { version = "0.1.3", default-features = false, features = ['csr'] }
+leptos_router = { version = "0.1.3", default-features = false, features = ['csr'] }
 log = "0.4"
 serde = {version = "1.0.152", features = ['derive']}
 serde_json = "1.0.91"
@@ -64,7 +64,7 @@ browserquery = "defaults"
 # Set by cargo-leptos watch when building with tha tool. Controls whether autoreload JS will be included in the head
 watch = false
 # The environment Leptos will run in, usually either "DEV" or "PROD"
-env = "DEV"
+env = "PROD"
 # The features to use when compiling the bin target
 #
 # Optional. Can be over-ridden with the command line parameter --bin-features

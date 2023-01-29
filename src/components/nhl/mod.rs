@@ -170,7 +170,7 @@ async fn get_live_game_data(
 }
 
 #[component]
-pub fn Nhl(cx: Scope) -> impl IntoView {
+pub fn nhl(cx: Scope) -> impl IntoView {
     let (date, set_date) =
         create_signal(cx, Local::now().date_naive().format("%Y-%m-%d").to_string());
     let teams = create_resource(cx, move || (), |_| get_teams());
