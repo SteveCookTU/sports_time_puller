@@ -1,7 +1,9 @@
 use crate::components::mlb::game::Game;
 use crate::components::mlb::schedule::{Schedule, ScheduleGame};
 use crate::components::mlb::teams::get_teams;
-use crate::time_zone::TimeZone;
+use crate::components::teams::*;
+use crate::components::time_zone::*;
+use crate::time_zone::TimeZone as Tz;
 use chrono::{DateTime, Duration, FixedOffset, Local, NaiveDate, Timelike};
 use leptos::*;
 use std::str::FromStr;
@@ -83,7 +85,7 @@ async fn load_results(params: RequestParams) -> Vec<GameResult> {
 async fn get_live_game_data(
     results: &mut Vec<GameResult>,
     schedule_game: ScheduleGame,
-    time_zone: TimeZone,
+    time_zone: Tz,
     selected_date: NaiveDate,
 ) {
     if let Ok(response) = reqwest::get(format!(
@@ -229,8 +231,7 @@ async fn get_live_game_data(
 pub fn mlb(cx: Scope) -> impl IntoView {
     let (date, set_date) =
         create_signal(cx, Local::now().date_naive().format("%Y-%m-%d").to_string());
-    let teams = create_resource(cx, move || (), |_| get_teams());
-    let (time_zone, set_time_zone) = create_signal(cx, TimeZone::Est as i8);
+    let (time_zone, set_time_zone) = create_signal(cx, Tz::Est as i8);
     let (team, set_team) = create_signal(cx, 0);
     let retrieve_results = create_action(cx, |value: &RequestParams| load_results(value.clone()));
 
@@ -238,36 +239,12 @@ pub fn mlb(cx: Scope) -> impl IntoView {
         cx,
         <div class="flex flex-col">
             <div class="flex h-12 justify-around items-center">
-                <select class="bg-transparent text-right" on:change=move |ev| {
-                    set_team(event_target_value(&ev).parse::<u16>().unwrap_or_default());
-                } value={team}>
-                    {
-                        move || {
-                            teams.with(|teams: &Result<Vec<(u16, String)>, ()>| {
-                                match teams {
-                                    Err(_) => view! {cx, <option>"Error Loading Teams"</option>}.into_view(cx),
-                                    Ok(teams) => {
-                                        set_team(teams.first().map(|(k, _)| *k).unwrap_or_default());
-                                        teams.iter().map(|(k, v)| {
-                                            view! {
-                                                cx,
-                                                <option value={*k}>{v}</option>
-                                            }
-                                        }).collect::<Vec<_>>()
-                                    }.into_view(cx)
-                                }
-                            })
-                        }
+                <Teams value={team.get()} on_change=move |ev| {
+                        set_team(event_target_value(&ev).parse::<u16>().unwrap_or_default());
                     }
-                </select>
-                <select class="bg-transparent text-right" on:change=move |ev| {
-                    set_time_zone(event_target_value(&ev).parse::<i8>().unwrap_or_default());
-                } value={time_zone}>
-                    <option value={TimeZone::Est as i8}>{TimeZone::Est.region()}</option>
-                    <option value={TimeZone::Cst as i8}>{TimeZone::Cst.region()}</option>
-                    <option value={TimeZone::Mst as i8}>{TimeZone::Mst.region()}</option>
-                    <option value={TimeZone::Pst as i8}>{TimeZone::Pst.region()}</option>
-                </select>
+                    get_teams=|| {get_teams()}
+                />
+                <TimeZone value={time_zone.get()} set_time_zone={set_time_zone}/>
                 <input class="bg-transparent" type="date" value={date} on:input=move |ev| {
                     set_date(event_target_value(&ev));
                 }/>

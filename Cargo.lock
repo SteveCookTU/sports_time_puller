@@ -1669,6 +1669,7 @@ dependencies = [
  "leptos_meta",
  "leptos_router",
  "log",
+ "num-traits",
  "num_enum",
  "reqwest",
  "serde",
