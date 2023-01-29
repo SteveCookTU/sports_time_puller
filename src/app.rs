@@ -1,4 +1,5 @@
 use crate::components::mlb::*;
+use crate::components::nhl::*;
 use leptos::*;
 use leptos_router::*;
 
@@ -29,8 +30,8 @@ pub fn App(cx: Scope) -> impl IntoView {
                 }/>
                 <Route path="nhl" view=  move |cx| view! {
                     cx,
-                    <main class="my-0 mx-auto max-w-3xl text-center">
-                        <h2 class="p-6 text-4xl">"NHL"</h2>
+                    <main>
+                        <Nhl />
                     </main>
                 }/>
             </Routes>
