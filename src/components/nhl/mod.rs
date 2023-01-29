@@ -265,7 +265,7 @@ pub fn Nhl(cx: Scope) -> impl IntoView {
                     }
                 </tbody>
             </table>
-            <p class="text-right whitespace-pre mr-4 font-semibold">"H = Home\nA = Away"</p>
+            <p class="text-right whitespace-pre mr-4 font-semibold">"N = National\nH = Home\nA = Away"</p>
         </div>
     }
 }
