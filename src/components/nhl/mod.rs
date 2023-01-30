@@ -198,7 +198,7 @@ pub fn nhl(cx: Scope) -> impl IntoView {
                         <th class="table-cell bg-gray-400">"Date"</th>
                         <th class="table-cell bg-gray-400">"Venue Start"</th>
                         <th class="table-cell bg-gray-400">"Venue End"</th>
-                        <th class="table-cell bg-gray-400">"Delay"</th>
+                        <th class="table-cell bg-gray-400">"Duration"</th>
                         <th class="table-cell bg-gray-400">"Start"</th>
                         <th class="table-cell bg-gray-400">"End"</th>
                         <th class="table-cell-tr bg-gray-400">"Broadcasts"</th>
