@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .nav-button {
-    @apply flex h-9 w-24 md:w-48 bg-gray-300 rounded-xl drop-shadow-sm hover:bg-gray-100 justify-center items-center transition-colors !important;
+    @apply flex h-9 w-24 md:w-64 bg-gray-300 rounded-xl drop-shadow-sm hover:bg-gray-100 justify-center items-center transition-colors !important;
 }
 
 .table-cell {

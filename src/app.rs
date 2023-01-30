@@ -31,12 +31,6 @@ pub fn app(cx: Scope) -> impl IntoView {
                         <Mlb />
                     </main>
                 }/>
-                <Route path="nba" view=  move |cx| view! {
-                    cx,
-                    <main class="my-0 mx-auto max-w-3xl text-center">
-                        <h2 class="p-6 text-4xl">"NBA"</h2>
-                    </main>
-                }/>
                 <Route path="nhl" view=  move |cx| view! {
                     cx,
                     <main>

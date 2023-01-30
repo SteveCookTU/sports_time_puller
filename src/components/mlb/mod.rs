@@ -3,6 +3,7 @@ use crate::components::mlb::schedule::{Schedule, ScheduleGame};
 use crate::components::mlb::teams::get_teams;
 use crate::components::teams::*;
 use crate::components::time_zone::*;
+use crate::components::RequestParams;
 use crate::time_zone::TimeZone as Tz;
 use chrono::{DateTime, Duration, FixedOffset, Local, NaiveDate, Timelike};
 use leptos::*;
@@ -11,13 +12,6 @@ use std::str::FromStr;
 mod game;
 mod schedule;
 mod teams;
-
-#[derive(Clone, Default)]
-struct RequestParams {
-    team: u16,
-    date: String,
-    time_zone: i8,
-}
 
 struct GameResult {
     pub title: String,
@@ -32,7 +26,7 @@ struct GameResult {
     pub broadcasts: String,
 }
 
-async fn load_results(params: RequestParams) -> Vec<GameResult> {
+async fn load_results(params: RequestParams<u16>) -> Vec<GameResult> {
     let time_zone = params.time_zone;
     let selected_date =
         NaiveDate::from_str(&params.date).unwrap_or_else(|_| Local::now().date_naive());
@@ -233,7 +227,8 @@ pub fn mlb(cx: Scope) -> impl IntoView {
         create_signal(cx, Local::now().date_naive().format("%Y-%m-%d").to_string());
     let (time_zone, set_time_zone) = create_signal(cx, Tz::Est as i8);
     let (team, set_team) = create_signal(cx, 0);
-    let retrieve_results = create_action(cx, |value: &RequestParams| load_results(value.clone()));
+    let retrieve_results =
+        create_action(cx, |value: &RequestParams<u16>| load_results(value.clone()));
 
     view! {
         cx,

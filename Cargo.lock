@@ -1665,6 +1665,7 @@ dependencies = [
  "chrono",
  "console_error_panic_hook",
  "console_log",
+ "lazy_static",
  "leptos",
  "leptos_meta",
  "leptos_router",
