@@ -1,3 +1,4 @@
+pub mod cfb;
 pub mod common;
 pub mod mlb;
 pub mod nhl;
