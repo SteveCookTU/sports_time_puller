@@ -6,7 +6,7 @@ use crate::components::soccer::schedule::get_matches;
 use crate::components::time_zone::*;
 use crate::components::RequestParams;
 use crate::time_zone::TimeZone as Tz;
-use chrono::{DateTime, Datelike, FixedOffset, Local, NaiveDate, NaiveDateTime, Timelike, Days};
+use chrono::{DateTime, Datelike, Days, FixedOffset, Local, NaiveDate, NaiveDateTime, Timelike};
 use leptos::*;
 use std::str::FromStr;
 
@@ -28,7 +28,11 @@ async fn load_results(params: RequestParams<()>) -> Vec<GameResult> {
         NaiveDate::from_str(&params.date).unwrap_or_else(|_| Local::now().date_naive());
 
     let mut results = vec![];
-    let matches = get_matches(selected_date.checked_sub_days(Days::new(1)).unwrap(), selected_date.checked_add_days(Days::new(1)).unwrap()).await;
+    let matches = get_matches(
+        selected_date.checked_sub_days(Days::new(1)).unwrap(),
+        selected_date.checked_add_days(Days::new(1)).unwrap(),
+    )
+    .await;
     for mat in matches {
         let game = get_game(mat.opta_id).await;
         if game.postponed {
@@ -140,7 +144,7 @@ pub fn soccer(cx: Scope) -> impl IntoView {
                 <thead>
                     <tr>
                         <th class="table-cell-tl bg-gray-400">"Competition"</th>
-                        <th class="table-cell-tl bg-gray-400">"Game"</th>
+                        <th class="table-cell bg-gray-400">"Game"</th>
                         <th class="table-cell bg-gray-400">"Date"</th>
                         <th class="table-cell bg-gray-400">"Start"</th>
                         <th class="table-cell bg-gray-400">"End"</th>
