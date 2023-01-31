@@ -6,7 +6,7 @@ use crate::components::soccer::schedule::get_matches;
 use crate::components::time_zone::*;
 use crate::components::RequestParams;
 use crate::time_zone::TimeZone as Tz;
-use chrono::{DateTime, Datelike, FixedOffset, Local, NaiveDate, NaiveDateTime, Timelike};
+use chrono::{DateTime, Datelike, FixedOffset, Local, NaiveDate, NaiveDateTime, Timelike, Days};
 use leptos::*;
 use std::str::FromStr;
 
@@ -28,7 +28,7 @@ async fn load_results(params: RequestParams<()>) -> Vec<GameResult> {
         NaiveDate::from_str(&params.date).unwrap_or_else(|_| Local::now().date_naive());
 
     let mut results = vec![];
-    let matches = get_matches(&selected_date).await;
+    let matches = get_matches(selected_date.checked_sub_days(Days::new(1)).unwrap(), selected_date.checked_add_days(Days::new(1)).unwrap()).await;
     for mat in matches {
         let game = get_game(mat.opta_id).await;
         if game.postponed {
@@ -69,6 +69,10 @@ async fn load_results(params: RequestParams<()>) -> Vec<GameResult> {
             end_time,
             FixedOffset::east_opt(time_zone as i32 * 3600).unwrap(),
         );
+
+        if start_trans.date_naive() != selected_date && end_trans.date_naive() != selected_date {
+            continue;
+        }
 
         let broadcasts = mat
             .broadcasters

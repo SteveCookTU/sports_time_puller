@@ -1,9 +1,9 @@
 use chrono::NaiveDate;
 use serde::Deserialize;
 
-pub async fn get_matches(date: &NaiveDate) -> Vec<Match> {
+pub async fn get_matches(start_date: NaiveDate, end_date: NaiveDate) -> Vec<Match> {
     if let Ok(response) = reqwest::get(format!(
-        "https://sportapi.mlssoccer.com/api/matches?culture=en-us&dateFrom={date}&dateTo={date}"
+        "https://sportapi.mlssoccer.com/api/matches?culture=en-us&dateFrom={start_date}&dateTo={end_date}"
     ))
     .await
     {
