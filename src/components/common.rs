@@ -12,6 +12,7 @@ pub fn Common(cx: Scope) -> impl IntoView {
                 <a class="nav-button" href="/sports_time_puller/cfb">"CFB"</a>
                 <a class="nav-button" href="/sports_time_puller/mlb">"MLB"</a>
                 <a class="nav-button" href="/sports_time_puller/nhl">"NHL"</a>
+                <a class="nav-button" href="/sports_time_puller/soccer">"Soccer"</a>
             </div>
             <App />
         </div>

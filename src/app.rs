@@ -1,6 +1,7 @@
 use crate::components::cfb::*;
 use crate::components::mlb::*;
 use crate::components::nhl::*;
+use crate::components::soccer::*;
 use leptos::*;
 use leptos_router::*;
 
@@ -42,6 +43,12 @@ pub fn app(cx: Scope) -> impl IntoView {
                     cx,
                     <main>
                         <Nhl />
+                    </main>
+                }/>
+                <Route path="soccer" view=  move |cx| view! {
+                    cx,
+                    <main>
+                        <Soccer />
                     </main>
                 }/>
             </Routes>

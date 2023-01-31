@@ -2,6 +2,7 @@ pub mod cfb;
 pub mod common;
 pub mod mlb;
 pub mod nhl;
+pub mod soccer;
 pub mod teams;
 pub mod time_zone;
 
