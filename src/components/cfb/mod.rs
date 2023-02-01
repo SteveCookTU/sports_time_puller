@@ -56,9 +56,9 @@ async fn load_results(params: RequestParams<u8>) -> Vec<GameResult> {
                     r.kickoff = format!("{} UTC", r.kickoff);
                     r.end = format!("{} UTC", r.end);
 
-                    r.start_trans += Tz::from(time_zone).region();
-                    r.kickoff_trans += Tz::from(time_zone).region();
-                    r.end_trans += Tz::from(time_zone).region();
+                    r.start_trans += format!(" {}", Tz::from(time_zone).region()).as_str();
+                    r.kickoff_trans += format!(" {}", Tz::from(time_zone).region()).as_str();
+                    r.end_trans += format!(" {}", Tz::from(time_zone).region()).as_str();
                     Some(r)
                 } else {
                     None
