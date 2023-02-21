@@ -4,10 +4,10 @@ use num_enum::{FromPrimitive, IntoPrimitive};
 #[repr(i8)]
 pub enum TimeZone {
     #[num_enum(default)]
-    Est = -4,
-    Cst = -5,
-    Mst = -6,
-    Pst = -7,
+    Est = -5,
+    Cst = -6,
+    Mst = -7,
+    Pst = -8,
 }
 
 impl TimeZone {
