@@ -225,7 +225,7 @@ async fn get_live_game_data(
 pub fn mlb(cx: Scope) -> impl IntoView {
     let (date, set_date) =
         create_signal(cx, Local::now().date_naive().format("%Y-%m-%d").to_string());
-    let (time_zone, set_time_zone) = create_signal(cx, Tz::Est as i8);
+    let (time_zone, set_time_zone) = create_signal(cx, Tz::Edt as i8);
     let (team, set_team) = create_signal(cx, 0);
     let retrieve_results =
         create_action(cx, |value: &RequestParams<u16>| load_results(value.clone()));
