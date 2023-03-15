@@ -13,10 +13,10 @@ pub enum TimeZone {
 impl TimeZone {
     pub fn region(&self) -> &'static str {
         match self {
-            TimeZone::Edt => "EST",
-            TimeZone::Cdt => "CST",
-            TimeZone::Mdt => "MST",
-            TimeZone::Pdt => "PST",
+            TimeZone::Edt => "EDT",
+            TimeZone::Cdt => "CDT",
+            TimeZone::Mdt => "MDT",
+            TimeZone::Pdt => "PDT",
         }
     }
 }
