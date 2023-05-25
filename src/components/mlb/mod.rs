@@ -116,7 +116,9 @@ async fn get_live_game_data(
                     for play in game.live_data.play_info.all_plays.iter() {
                         for play_event in play.play_events.iter() {
                             if let Some(description) = play_event.details.description.as_ref() {
-                                if description.to_lowercase().contains("delayed") {
+                                if description.to_lowercase().contains("delayed")
+                                    && !description.to_lowercase().contains("delayed start")
+                                {
                                     if let Some(end_time) = play_event.end_time.as_ref() {
                                         let start_time =
                                             DateTime::parse_from_rfc3339(&play_event.start_time)
