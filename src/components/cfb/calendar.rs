@@ -1,7 +1,7 @@
 use serde::Deserialize;
 
 pub async fn get_calendar(year: i32) -> Vec<CalendarWeek> {
-    if let Ok(response) = reqwest::get(format!("https://war-helper.com/calendar?year={year}")).await
+    if let Ok(response) = reqwest::get(format!("https://ylewvgiuxqc2ox7we5rdxqtwji0wvsri.lambda-url.us-east-1.on.aws/?mode=calendar&year={year}")).await
     {
         response.json::<Vec<CalendarWeek>>().await.unwrap()
     } else {
