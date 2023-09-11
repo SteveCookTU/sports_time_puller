@@ -47,7 +47,7 @@ async fn load_results(params: RequestParams<u8>) -> Vec<GameResult> {
         return vec![];
     };
 
-    if let Ok(response) = reqwest::get(format!("https://war-helper.com/time?year={year}&week={}&seasonType={}&offset={time_zone}&outlet={}", week.week, week.season_type, &OUTLETS[id as usize])).await {
+    if let Ok(response) = reqwest::get(format!("https://ylewvgiuxqc2ox7we5rdxqtwji0wvsri.lambda-url.us-east-1.on.aws/?mode=time&year={year}&week={}&seasonType={}&offset={time_zone}&outlet={}", week.week, week.season_type, &OUTLETS[id as usize])).await {
         if let Ok(result) = response.json::<Vec<GameResult>>().await {
             return result.into_iter().filter_map(|mut r| {
                 log!("{:?}", r);
