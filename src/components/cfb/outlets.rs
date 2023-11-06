@@ -9,6 +9,7 @@ lazy_static! {
         "CBSSN".to_string(),
         "ESPN".to_string(),
         "ESPN2".to_string(),
+        "ESPNU".to_string(),
         "NBC".to_string(),
         "NFLN".to_string(),
         "PAC12".to_string(),
