@@ -32,7 +32,7 @@ async fn load_results(params: RequestParams<u16>) -> Vec<GameResult> {
         NaiveDate::from_str(&params.date).unwrap_or_else(|_| Local::now().date_naive());
     let id = params.team;
     let mut results = vec![];
-    if let Ok(response) = reqwest::get(format!("https://statsapi.mlb.com/api/v1/schedule?language=en&sportId=1&date={}&hydrate=game,broadcasts", params.date)).await {
+    let response = reqwest::get(format!("https://statsapi.mlb.com/api/v1/schedule?language=en&sportId=1&date={}&hydrate=game,broadcasts", params.date)).await.unwrap();
         let schedule = response.json::<Schedule>().await.unwrap_or_default();
         for date in schedule.dates {
             for schedule_game in date.games {
@@ -72,7 +72,6 @@ async fn load_results(params: RequestParams<u16>) -> Vec<GameResult> {
                 ).await;
             }
         }
-    }
     results
 }
 
