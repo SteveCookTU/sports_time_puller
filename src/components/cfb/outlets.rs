@@ -3,8 +3,8 @@ use lazy_static::lazy_static;
 lazy_static! {
     pub static ref OUTLETS: Vec<String> = vec![
         "ABC".to_string(),
-        "ACCN".to_string(),
-        "BTN".to_string(),
+        "ACC NETWORK".to_string(),
+        "BIG10".to_string(),
         "CBS".to_string(),
         "CBSSN".to_string(),
         "ESPN".to_string(),
@@ -15,7 +15,7 @@ lazy_static! {
         "PAC12".to_string(),
         "FOX".to_string(),
         "FS1".to_string(),
-        "SECN".to_string()
+        "SEC NETWORK".to_string()
     ];
 }
 
