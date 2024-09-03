@@ -10,14 +10,6 @@ pub fn app() -> impl IntoView {
     view! {
         <Router>
             <Routes>
-                <Route path="" view= move || view! {
-                    <main class="my-0 mx-auto max-w-3xl text-center">
-                        <h2 class="p-6 text-4xl">"Welcome to the Sports Time Puller"</h2>
-                        <p class="px-10 pb-10 text-center">"Click an option on the navigation bar above to get started."</p>
-                    </main>
-                }/>
-            </Routes>
-            <Routes base={"sports_time_puller".to_string()}>
                 <Route path="" view=  move || view! {
                     <main class="my-0 mx-auto max-w-3xl text-center">
                         <h2 class="p-6 text-4xl">"Welcome to the Sports Time Puller"</h2>
