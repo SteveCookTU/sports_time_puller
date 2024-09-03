@@ -8,6 +8,7 @@ use crate::components::time_zone::*;
 use crate::components::RequestParams;
 use crate::time_zone::TimeZone as Tz;
 use chrono::{DateTime, Datelike, Local, NaiveDate};
+use leptos::logging::log;
 use leptos::*;
 use serde::Deserialize;
 use std::str::FromStr;
@@ -74,26 +75,23 @@ async fn load_results(params: RequestParams<u8>) -> Vec<GameResult> {
 }
 
 #[component]
-pub fn cfb(cx: Scope) -> impl IntoView {
-    let (date, set_date) =
-        create_signal(cx, Local::now().date_naive().format("%Y-%m-%d").to_string());
-    let (time_zone, set_time_zone) = create_signal(cx, Tz::Edt as i8);
-    let (outlet, set_outlet) = create_signal(cx, 0);
-    let retrieve_results =
-        create_action(cx, |value: &RequestParams<u8>| load_results(value.clone()));
+pub fn cfb() -> impl IntoView {
+    let (date, set_date) = create_signal(Local::now().date_naive().format("%Y-%m-%d").to_string());
+    let (time_zone, set_time_zone) = create_signal(Tz::Edt as i8);
+    let (outlet, set_outlet) = create_signal(0);
+    let retrieve_results = create_action(|value: &RequestParams<u8>| load_results(value.clone()));
 
     view! {
-        cx,
         <div class="flex flex-col">
             <div class="flex h-12 justify-around items-center m-4 bg-gray-300 rounded-lg shadow-sm shadow-gray-400">
                 <Teams value={outlet.get()} on_change=move |ev| {
-                        set_outlet(event_target_value(&ev).parse::<u8>().unwrap_or_default());
+                        set_outlet.set(event_target_value(&ev).parse::<u8>().unwrap_or_default());
                     }
                     get_teams=|| {get_outlets()}
                 />
                 <TimeZone value={time_zone.get()} set_time_zone={set_time_zone}/>
                 <input class="bg-transparent border border-gray-600 rounded-md text-right" type="date" value={date} on:input=move |ev| {
-                    set_date(event_target_value(&ev));
+                    set_date.set(event_target_value(&ev));
                 }/>
                 <button class="bg-transparent border border-gray-600 rounded-md transition-colors hover:bg-gray-200 px-2 py-1" on:click=move |_| retrieve_results.dispatch(RequestParams {
                         team: outlet.get(), date: date.get(), time_zone: time_zone.get()
@@ -116,11 +114,9 @@ pub fn cfb(cx: Scope) -> impl IntoView {
                     { move || retrieve_results.value().with(|results: &Option<Vec<GameResult>>| {
                         if let Some(results) = results {
                             view ! {
-                                cx,
                                 {
                                     results.iter().map(|r| {
                                         view! {
-                                            cx,
                                             <tr>
                                                 <td class="table-cell bg-gray-300">{&r.team}</td>
                                                 <td class="table-cell bg-gray-300">{&r.date}</td>
@@ -132,14 +128,13 @@ pub fn cfb(cx: Scope) -> impl IntoView {
                                                 <td class="table-cell bg-gray-300">{&r.end_trans}</td>
                                             </tr>
                                         }
-                                    }).collect::<Vec<_>>().into_view(cx)
+                                    }).collect::<Vec<_>>().into_view()
                                 }
                             }
                         } else {
                             view! {
-                                cx,
                                 <></>
-                            }.into_view(cx)
+                            }.into_view()
                         }
                     })
                     }

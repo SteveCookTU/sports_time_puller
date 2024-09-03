@@ -6,7 +6,6 @@ use std::str::FromStr;
 
 #[component]
 pub fn teams<OutputT, T, F, Fu, GetTeams>(
-    cx: Scope,
     value: T,
     on_change: F,
     get_teams: GetTeams,
@@ -18,20 +17,24 @@ where
     Fu: Future<Output = OutputT> + 'static,
     GetTeams: Fn() -> Fu + 'static,
 {
-    let teams = create_resource(cx, move || (), move |_| get_teams());
+    let teams = create_resource(move || (), move |_| get_teams());
 
     view! {
-        cx,
         <select class="bg-transparent text-right border border-gray-600 rounded-md" on:change=on_change value={value}>
             {
                 move || {
-                    teams.with(|teams: &OutputT| {
-                        teams.as_ref().iter().map(|(k, v)| {
+                    teams.with(|teams: &Option<OutputT>| {
+                        if let Some(teams) = teams {
+                            teams.as_ref().iter().map(|(k, v)| {
+                                view! {
+                                    <option value={*k}>{v}</option>
+                                }
+                            }).collect::<Vec<_>>().into_view()
+                        } else {
                             view! {
-                                cx,
-                                <option value={*k}>{v}</option>
-                            }
-                        }).collect::<Vec<_>>().into_view(cx)
+                                <></>
+                            }.into_view()
+                        }
                     })
                 }
             }

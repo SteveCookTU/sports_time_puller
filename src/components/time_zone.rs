@@ -2,11 +2,10 @@ use crate::time_zone::*;
 use leptos::*;
 
 #[component]
-pub fn time_zone(cx: Scope, value: i8, set_time_zone: WriteSignal<i8>) -> impl IntoView {
+pub fn time_zone(value: i8, set_time_zone: WriteSignal<i8>) -> impl IntoView {
     view! {
-        cx,
         <select class="bg-transparent text-right border border-gray-600 rounded-md" on:change=move |ev| {
-                    set_time_zone(event_target_value(&ev).parse::<i8>().unwrap_or_default());
+                    set_time_zone.set(event_target_value(&ev).parse::<i8>().unwrap_or_default());
                 } value={value}>
                     <option value={TimeZone::Edt as i8}>{TimeZone::Edt.region()}</option>
                     <option value={TimeZone::Cdt as i8}>{TimeZone::Cdt.region()}</option>
