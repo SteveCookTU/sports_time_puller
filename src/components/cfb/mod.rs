@@ -40,7 +40,7 @@ async fn load_results(params: RequestParams<u8>) -> Vec<GameResult> {
 
     let week = calendar.iter().find(|week| {
         selected_date
-            < DateTime::parse_from_rfc3339(&week.last_game_start)
+            <= DateTime::parse_from_rfc3339(&week.last_game_start)
                 .unwrap_or_default()
                 .date_naive()
     });
