@@ -33,45 +33,41 @@ async fn load_results(params: RequestParams<u16>) -> Vec<GameResult> {
     let id = params.team;
     let mut results = vec![];
     let response = reqwest::get(format!("https://statsapi.mlb.com/api/v1/schedule?language=en&sportId=1&date={}&hydrate=game,broadcasts", params.date)).await.unwrap();
-        let schedule = response.json::<Schedule>().await.unwrap_or_default();
-        for date in schedule.dates {
-            for schedule_game in date.games {
-                if id != 0 && schedule_game.teams.away.team.id != id
-                    && schedule_game.teams.home.team.id != id {
-                    continue;
-                }
-                if schedule_game.status.detailed_state.as_str() != "Final"
-                    && !schedule_game
+    let schedule = response.json::<Schedule>().await.unwrap_or_default();
+    for date in schedule.dates {
+        for schedule_game in date.games {
+            if id != 0
+                && schedule_game.teams.away.team.id != id
+                && schedule_game.teams.home.team.id != id
+            {
+                continue;
+            }
+            if !["Final", "Game Over"].contains(&schedule_game.status.detailed_state.as_str())
+                && !schedule_game
                     .status
                     .detailed_state
                     .contains("Completed Early")
-                {
-                    results.push(GameResult {
-                        title: format!(
-                            "{} at {}",
-                            schedule_game.teams.away.team.name,
-                            schedule_game.teams.home.team.name
-                        ),
-                        date: schedule_game.status.detailed_state.clone(),
-                        venue_start: String::new(),
-                        venue_end: String::new(),
-                        duration: String::new(),
-                        pre_game_delay: String::new(),
-                        delay_time: String::new(),
-                        start_time: String::new(),
-                        end_time: String::new(),
-                        broadcasts: String::new(),
-                    });
-                    continue;
-                }
-                get_live_game_data(
-                    &mut results,
-                    schedule_game,
-                    time_zone.into(),
-                    selected_date,
-                ).await;
+            {
+                results.push(GameResult {
+                    title: format!(
+                        "{} at {}",
+                        schedule_game.teams.away.team.name, schedule_game.teams.home.team.name
+                    ),
+                    date: schedule_game.status.detailed_state.clone(),
+                    venue_start: String::new(),
+                    venue_end: String::new(),
+                    duration: String::new(),
+                    pre_game_delay: String::new(),
+                    delay_time: String::new(),
+                    start_time: String::new(),
+                    end_time: String::new(),
+                    broadcasts: String::new(),
+                });
+                continue;
             }
+            get_live_game_data(&mut results, schedule_game, time_zone.into(), selected_date).await;
         }
+    }
     results
 }
 
