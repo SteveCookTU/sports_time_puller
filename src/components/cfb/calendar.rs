@@ -11,7 +11,7 @@ pub async fn get_calendar(year: i32) -> Vec<CalendarWeek> {
 
 #[derive(Deserialize, Default)]
 pub struct CalendarWeek {
-    pub season: String,
+    pub season: i32,
     pub week: u8,
     #[serde(rename = "seasonType")]
     pub season_type: String,
